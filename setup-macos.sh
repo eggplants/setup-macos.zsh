@@ -13,9 +13,10 @@ open /Applications/Docker.app
 brew install \
     act binutils byobu cmake coreutils deno diffutils \
     echo-sd emacs feh findutils gawk gh gnu-sed \
-    gnu-tar gnupg go grep nodenv ncurses nkf pinentry-mac \
+    gnu-tar gnupg go grep nodenv ncurses nkf mas pinentry-mac \
     pyenv rbenv shellcheck sl spectacle tmux tree uniutils wget w3m yarn
 brew reinstall git nano
+mas install 1429033973 # runcat
 
 curl https://raw.githubusercontent.com/scopatz/nanorc/master/install.sh | sh
 
@@ -47,8 +48,6 @@ echo -e "5\ny\n" |
         --expert --edit-key "$(gpg --list-keys |
             sed -n '4s/^  *//p')" trust
 gpg -e -r w10776e8w@yahoo.co.jp ~/.netrc && rm -i "$_"
-
-curl https://kyome.io/resources/runcat_plugins_manager.dmg -o runcat.dmg && open "$_"
 
 cat << 'A' >> .zshenv
 ##### Mac BEGIN #####
