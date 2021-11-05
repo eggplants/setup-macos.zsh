@@ -13,7 +13,7 @@ brew install \
     act binutils byobu cmake coreutils deno diffutils \
     docker echo-sd emacs feh findutils gawk gh gnu-sed \
     gnu-tar gnupg go grep nodenv ncurses nkf pinentry-mac \
-    pyenv rbenv shellcheck sl tmux tree uniutils wget w3m yarn
+    pyenv rbenv shellcheck sl spectacle tmux tree uniutils wget w3m yarn
 brew reinstall git nano
 
 curl https://raw.githubusercontent.com/scopatz/nanorc/master/install.sh | sh
