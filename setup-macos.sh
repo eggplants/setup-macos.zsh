@@ -7,7 +7,7 @@ brew update
 brew tap fumiyas/echo-sd
 brew tap gcenx/wine
 brew install --cask \
-    docker google-chrome iterm2 \
+    docker google-chrome google-japanese-ime　iterm2 \
     keybase obs slack visual-studio-code zoom
 open /Applications/Docker.app
 brew install \
