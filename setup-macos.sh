@@ -9,9 +9,10 @@ brew tap gcenx/wine
 brew install --cask \
     docker google-chrome iterm2 \
     keybase obs slack visual-studio-code zoom
+open /Applications/Docker.app
 brew install \
     act binutils byobu cmake coreutils deno diffutils \
-    docker echo-sd emacs feh findutils gawk gh gnu-sed \
+    echo-sd emacs feh findutils gawk gh gnu-sed \
     gnu-tar gnupg go grep nodenv ncurses nkf pinentry-mac \
     pyenv rbenv shellcheck sl spectacle tmux tree uniutils wget w3m yarn
 brew reinstall git nano
