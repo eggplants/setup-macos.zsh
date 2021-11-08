@@ -14,7 +14,8 @@ brew install \
     act binutils byobu cmake coreutils deno diffutils \
     echo-sd emacs feh findutils gawk gh gnu-sed \
     gnu-tar gnupg go grep nodenv ncurses nkf mas pinentry-mac \
-    pyenv rbenv shellcheck sl spectacle tmux tree uniutils wget w3m yarn
+    pyenv rbenv shellcheck sl spectacle tcl-tk@8.6.12 \
+    tmux tree uniutils wget w3m yarn
 brew reinstall git nano
 mas install 1429033973 # runcat
 
@@ -52,27 +53,39 @@ gpg -e -r w10776e8w@yahoo.co.jp ~/.netrc && rm -i "$_"
 cat << 'A' >> .zshenv
 ##### Mac BEGIN #####
 
-export PERLLIB=/Library/Developer/CommandLineTools/usr/share/git-core/perl:$PERLLIB
-export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+export COWPATH="$HOME/usr/share/cows"
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
-export PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"
 export MANPATH="/usr/local/opt/findutils/libexec/gnuman:$MANPATH"
-export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 export MANPATH="/usr/local/opt/gnu-sed/libexec/gnuman:$MANPATH"
-export COWPATH=$HOME/usr/share/cows
-export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
 export MANPATH="/usr/local/opt/gnu-tar/libexec/gnuman:$MANPATH"
-PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
-MANPATH="/usr/local/opt/grep/libexec/gnuman:$MANPATH"
+export MANPATH="/usr/local/opt/grep/libexec/gnuman:$MANPATH"
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+export PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"
+export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
+export PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
+export PATH="/usr/local/opt/tcl-tk/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
+export PATH="/usr/local/sbin:$PATH"
+export PERLLIB="/Library/Developer/CommandLineTools/usr/share/git-core/perl:$PERLLIB"
 eval "$(nodenv init -)"
 
 ##### mac END #####
 A
 
-pyenv install 3.10.0
-pyenv install 3.7.12
-pyrnv global "$_"
+for v in '3.7.12' '3.8.12' '3.9.7' '3.10.0'; do
+  env \
+    PATH="$(brew --prefix tcl-tk)/bin:$PATH" \
+    LDFLAGS="-L$(brew --prefix tcl-tk)/lib" \
+    CPPFLAGS="-I$(brew --prefix tcl-tk)/include" \
+    PKG_CONFIG_PATH="$(brew --prefix tcl-tk)/lib/pkgconfig" \
+    CFLAGS="-I$(brew --prefix tcl-tk)/include" \
+    PYTHON_CONFIGURE_OPTS="\
+--with-tcltk-includes='-I$(brew --prefix tcl-tk)/include' \
+--with-tcltk-libs='-L$(brew --prefix tcl-tk)/lib \
+-ltcl8.6 -ltk8.6'" pyenv install "$v"
+done
+pyenv global "3.9.7"
 rbenv install 3.0.0
 rbenv install 2.7.4
 pyenv global "$_"
