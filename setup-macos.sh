@@ -90,3 +90,5 @@ rbenv install 2.7.4
 pyenv global "$_"
 nodenv install 17.0.1
 nodenv global "$_"
+
+sudo spctl --master-disable
