@@ -15,7 +15,7 @@ brew install \
     echo-sd emacs feh findutils gawk gh gnu-sed \
     gnu-tar gnupg go grep nodenv ncurses nkf mas pinentry-mac \
     pyenv rbenv shellcheck sl spectacle tcl-tk@8.6.12 \
-    tmux tree uniutils wget w3m yarn
+    tmux tree uniutils wget wine-crossover w3m yarn
 brew reinstall git nano
 mas install 1429033973 # runcat
 
