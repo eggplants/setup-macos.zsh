@@ -8,7 +8,7 @@ brew tap fumiyas/echo-sd
 brew tap gcenx/wine
 brew install --cask \
     docker google-chrome google-japanese-ime　iterm2 \
-    keybase obs slack visual-studio-code zoom
+    keybase obs slack visual-studio-code zoom zsh-completions
 open /Applications/Docker.app
 brew install \
     act binutils byobu cmake coreutils deno diffutils \
