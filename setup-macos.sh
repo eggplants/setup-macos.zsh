@@ -69,6 +69,11 @@ export PATH="/usr/local/opt/tcl-tk/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
 export PERLLIB="/Library/Developer/CommandLineTools/usr/share/git-core/perl:$PERLLIB"
 eval "$(nodenv init -)"
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+  autoload -Uz compinit
+  compinit
+fi
 
 ##### mac END #####
 A
@@ -93,3 +98,5 @@ nodenv install 17.0.1
 nodenv global "$_"
 
 sudo spctl --master-disable
+rm -f ~/.zcompdump; compinit
+
