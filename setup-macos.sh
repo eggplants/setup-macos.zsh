@@ -98,5 +98,5 @@ nodenv install 17.0.1
 nodenv global "$_"
 
 sudo spctl --master-disable
-rm -f ~/.zcompdump; compinit
 
+chmod 755 /usr/local/share && rm -f ~/.zcompdump && compinit
