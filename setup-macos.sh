@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 set -eux
+user="${1-eggplants}"
+mail="${2-w10776e8w@yahoo.co.jp}"
 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 brew update
@@ -25,6 +27,7 @@ curl https://raw.githubusercontent.com/scopatz/nanorc/master/install.sh | sh
 
 git clone https://github.com/eggplants/dotfiles
 cp dotfiles/.{*shrc,nanorc,gitconfig,weather*.sh} ~
+chmod +x ~/.weather*.sh
 
 git config --global gpg.program "$(which gpg)"
 git config --global credential.helper \
@@ -39,18 +42,20 @@ echo -n "gh-token: "
 read -sr pass
 cat << A > .netrc
 echo machine github.com
-echo login eggplants
+echo login $user
 password $pass
 machine gist.github.com
-login eggplants
+login $user
 password $pass
 A
 
 echo -e "5\ny\n" |
     gpg --command-fd 0 \
-        --expert --edit-key "$(gpg --list-keys |
-            sed -n '4s/^  *//p')" trust
-gpg -e -r w10776e8w@yahoo.co.jp ~/.netrc && rm -i "$_"
+        --expert --edit-key "$(
+            gpg --list-keys |
+            sed -n '4s/^  *//p'
+        )" trust
+gpg -e -r "$mail" ~/.netrc && rm -i "$_"
 
 cat << 'A' >> .zshenv
 ##### Mac BEGIN #####
