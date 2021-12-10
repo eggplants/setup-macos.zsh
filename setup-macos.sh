@@ -16,7 +16,7 @@ brew install \
     act binutils byobu cmake coreutils deno diffutils \
     echo-sd emacs feh findutils gawk gh gnu-sed \
     gnu-tar gnupg go grep hadolint imagemagick nodenv ncurses \
-    nkf mas pinentry-mac pyenv rbenv shellcheck \
+    nkf mas mecab mecab mecab-ipadic pinentry-mac pyenv rbenv shellcheck \
     sl spectacle tcl-tk@8.6.12 \
     tmux tree uniutils wget wine-crossover w3m yarn
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
