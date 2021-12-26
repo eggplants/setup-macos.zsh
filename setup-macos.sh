@@ -18,7 +18,7 @@ brew install \
     gnu-tar gnupg go grep hadolint imagemagick nodenv ncurses \
     nkf mas mecab mecab mecab-ipadic pinentry-mac pyenv rbenv shellcheck \
     sl spectacle tcl-tk@8.6.12 \
-    tmux tree uniutils wget wine-crossover w3m yarn
+    tmux tree uniutils wget wine-crossover winetricks w3m yarn
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 brew reinstall git nano
 mas install 1429033973 # runcat
