@@ -125,7 +125,6 @@ command -v go 2>/dev/null || {
   mise use --global go@latest
 }
 
-
 # lisp
 command -v sbcl 2>/dev/null || ros install sbcl-bin
 
