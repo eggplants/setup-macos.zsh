@@ -2,8 +2,8 @@
 
 set -euo pipefail
 
-cp ~/Brewfile ./Brewfile
-git add ./Brewfile
+cp ~/.Brewfile ./.Brewfile
+git add ./.Brewfile
 git diff --cached
 
 echo -n "upload?"
