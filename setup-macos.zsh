@@ -60,6 +60,7 @@ A
   gpg -e -r "$git_email" ~/.netrc
   rm ~/.netrc
   sudo chmod +x "$netrc_helper_path"
+  git config --global core.editor nano
   git config --global credential.helper "$netrc_helper_path"
   git config --global user.name eggplants
   git config --global user.email "$git_email"
