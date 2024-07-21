@@ -309,7 +309,7 @@ cat <<'A' >.zshenv.tmp
 function brew() {
   /usr/bin/env -S brew "$@"
   if [[ "$1" == "install" || "$1" == "remove" || "$1" == "uninstall" ]]; then
-    /usr/bin/env -S brew bundle dump --force --file=~/.Brewfile
+    /usr/bin/env -S brew bundle dump --force --file=~/Brewfile
   fi
 }
 A
