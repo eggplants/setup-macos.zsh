@@ -257,6 +257,8 @@ setopt incappendhistory
 setopt interactivecomments
 setopt prompt_subst
 
+unsetopt nomatch
+
 # alias
 alias ll='ls -lGF --color=auto'
 alias ls='ls -GF --color=auto'
