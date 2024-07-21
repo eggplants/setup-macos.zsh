@@ -23,6 +23,7 @@ sudo spctl --master-disable
 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 brew bundle
+brew reinstall git nano
 
 # import key
 gpg --list-keys | grep -q 8117 || {
