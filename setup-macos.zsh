@@ -139,24 +139,25 @@ command -v sbcl 2>/dev/null || ros install sbcl-bin
     sed '/\/flexoki.toml/!s/^.*/  # "&",/' >> ~/.config/alacritty/alacritty.toml
   echo ']' >> ~/.config/alacritty/alacritty.toml
 
-  cat <<'A'>>~/.config/alacritty/alacritty.toml
+  nf_font='HackGen Console NF'
+  cat <<A >>~/.config/alacritty/alacritty.toml
 [font]
 size = 10.0
 
 [font.bold]
-family = "HackGen35 Console"
+family = "$nf_font"
 style = "Bold"
 
 [font.bold_italic]
-family = "HackGen35 Console"
+family = "$nf_font"
 style = "Bold Italic"
 
 [font.italic]
-family = "HackGen35 Console"
+family = "$nf_font"
 style = "Italic"
 
 [font.normal]
-family = "HackGen35 Console"
+family = "$nf_font"
 style = "Regular"
 A
 }
