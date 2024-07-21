@@ -7,8 +7,8 @@ if ! [[ -f ~/.sec.key ]]; then
   exit 1
 fi
 
-if ! [[ -f ~/Brewfile ]]; then
-  echo "need: ~/Brewfile"
+if ! [[ -f ~/.Brewfile ]]; then
+  echo "need: ~/.Brewfile"
   exit 1
 fi
 
@@ -22,7 +22,7 @@ pushd _setup
 sudo spctl --master-disable
 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-brew bundle
+brew bundle --global
 brew reinstall git nano
 
 # import key
