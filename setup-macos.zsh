@@ -49,16 +49,17 @@ machine gist.github.com
 login eggplants
 password ${token}
 A
+  netrc_helper_path="$(
+    readlink /usr/local/bin/git -f | sed 's;/bin/git;;'
+  )/share/git-core/contrib/credential/netrc/git-credential-netrc.perl"
   git_email="$(
     gpg --list-keys | grep -Em1 '^uid' |
     rev | cut -f1 -d ' ' | tr -d '<>' | rev
   )"
   gpg -e -r "$git_email" ~/.netrc
   rm ~/.netrc
-  sudo chmod +x \
-    /usr/local/Cellar/git/*/share/git-core/contrib/credential/netrc/git-credential-netrc.perl
-  git config --global credential.helper \
-    /usr/local/Cellar/git/*/share/git-core/contrib/credential/netrc/git-credential-netrc.perl
+  sudo chmod +x "$netrc_helper_path"
+  git config --global credential.helper "$netrc_helper_path"
   git config --global user.name eggplants
   git config --global user.email "$git_email"
   git config --global user.signingkey "$(
@@ -136,7 +137,7 @@ command -v sbcl 2>/dev/null || ros install sbcl-bin
   mv alacritty-theme-master ~/.config/alacritty
   echo 'import = [' >> ~/.config/alacritty/alacritty.toml
   find ~/.config/alacritty/alacritty-theme-master/themes -type f -name '*toml' |
-    sed 's/^.*/  # "&",/' >> ~/.config/alacritty/alacritty.toml
+    sed '/\/flexoki.toml/!s/^.*/  # "&",/' >> ~/.config/alacritty/alacritty.toml
   echo ']' >> ~/.config/alacritty/alacritty.toml
 
   cat <<'A'>>~/.config/alacritty/alacritty.toml
