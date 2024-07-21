@@ -1,5 +1,7 @@
+tap "eggplants/tap"
 tap "gcenx/wine"
 tap "homebrew/bundle"
+
 brew "awscli"
 brew "binutils"
 brew "byobu"
@@ -31,6 +33,8 @@ brew "w3m"
 brew "wget"
 brew "whois"
 brew "winetricks"
+brew "eggplants/tap/xmas"
+
 cask "alacritty"
 cask "android-studio"
 cask "firefox"
@@ -48,5 +52,6 @@ cask "visual-studio-code"
 cask "vlc"
 cask "wine-crossover"
 cask "xquartz"
+
 mas "RunCat", id: 1429033973
 mas "Xcode", id: 497799835
