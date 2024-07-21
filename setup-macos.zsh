@@ -27,7 +27,7 @@ brew bundle
 # import key
 gpg --list-keys | grep -q 8117 || {
   export GPG_TTY="$(tty)"
-  echo "pinentry-program $(which pinentry-mac)" > ~/.gnupg/gpg-agent.conf
+  echo "pinentry-program $(which pinentry-mac)" >~/.gnupg/gpg-agent.conf
   chmod 600 ~/.gnupg/*
   chmod 700 ~/.gnupg
   gpgconf --kill gpg-agent
@@ -41,7 +41,7 @@ gpg --list-keys | grep -q 8117 || {
   # Required permission: Gist, Contents
   # https://github.com/settings/tokens
   read -s -r token
-  cat << A >> ~/.netrc
+  cat <<A >>~/.netrc
 machine github.com
 login eggplants
 password ${token}
@@ -54,7 +54,7 @@ A
   )/share/git-core/contrib/credential/netrc/git-credential-netrc.perl"
   git_email="$(
     gpg --list-keys | grep -Em1 '^uid' |
-    rev | cut -f1 -d ' ' | tr -d '<>' | rev
+      rev | cut -f1 -d ' ' | tr -d '<>' | rev
   )"
   gpg -e -r "$git_email" ~/.netrc
   rm ~/.netrc
@@ -74,7 +74,7 @@ A
 [[ -d ~/.nano ]] || {
   git clone --depth 1 --single-branch 'https://github.com/serialhex/nano-highlight' ~/.nano
 }
-cat <<'A'>~/.nanorc
+cat <<'A' >~/.nanorc
 include "~/.nano/*.nanorc"
 
 set autoindent
@@ -91,13 +91,13 @@ set statuscolor white,green
 A
 
 # mise
-echo 'eval "$(/usr/local/bin/mise activate bash)"' >> ~/.bashrc
-echo 'eval "$(/usr/local/bin/mise activate zsh)"' >> ~/.zshrc
+echo 'eval "$(/usr/local/bin/mise activate bash)"' >>~/.bashrc
+echo 'eval "$(/usr/local/bin/mise activate zsh)"' >>~/.zshrc
 eval "$(/usr/local/bin/mise activate zsh)"
 
 # python
 command -v python 2>/dev/null || {
-  mise use --global python@latest 
+  mise use --global python@latest
   pip install pipx
   pipx ensurepath
   export PATH="$HOME/.local/bin:$PATH"
@@ -134,10 +134,10 @@ command -v sbcl 2>/dev/null || ros install sbcl-bin
   curl -o- 'https://codeload.github.com/alacritty/alacritty-theme/tar.gz/refs/heads/master' |
     tar xzf - alacritty-theme-master/themes
   mv alacritty-theme-master ~/.config/alacritty
-  echo 'import = [' >> ~/.config/alacritty/alacritty.toml
+  echo 'import = [' >>~/.config/alacritty/alacritty.toml
   find ~/.config/alacritty/alacritty-theme-master/themes -type f -name '*toml' |
-    sed '/\/flexoki.toml/!s/^.*/  # "&",/' >> ~/.config/alacritty/alacritty.toml
-  echo ']' >> ~/.config/alacritty/alacritty.toml
+    sed '/\/flexoki.toml/!s/^.*/  # "&",/' >>~/.config/alacritty/alacritty.toml
+  echo ']' >>~/.config/alacritty/alacritty.toml
 
   nf_font='HackGen Console NF'
   cat <<A >>~/.config/alacritty/alacritty.toml
@@ -164,9 +164,9 @@ A
 
 # starship
 [[ -f ~/.config/starship.toml ]] || {
-  echo 'eval "$(starship init bash)"' >> ~/.bashrc
-  echo 'eval "$(starship init zsh)"' >> ~/.zshrc
-  cat <<'A'>>~/.config/starship.toml
+  echo 'eval "$(starship init bash)"' >>~/.bashrc
+  echo 'eval "$(starship init zsh)"' >>~/.zshrc
+  cat <<'A' >>~/.config/starship.toml
 "$schema" = 'https://starship.rs/config-schema.json'
 
 add_newline = false
@@ -313,12 +313,16 @@ function brew() {
     /usr/bin/env -S brew bundle dump --force --file=~/Brewfile
   fi
 }
+
+function shfmt() {
+  shfmt -i 4 -l -w "$@"
+}
 A
 cat ~/.zshenv >>.zshenv.tmp
 mv .zshenv.tmp ~/.zshenv
 
 byobu-enable
-echo '_byobu_sourced=1 . /usr/bin/byobu-launch 2>/dev/null || true' > ~/.zprofile
+echo '_byobu_sourced=1 . /usr/bin/byobu-launch 2>/dev/null || true' >~/.zprofile
 
 rm ~/.sec.key
 popd
