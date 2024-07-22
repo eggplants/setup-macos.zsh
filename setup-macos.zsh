@@ -60,17 +60,18 @@ A
   gpg -e -r "$git_email" ~/.netrc
   rm ~/.netrc
   sudo chmod +x "$netrc_helper_path"
+  git config --global commit.gpgsign true
   git config --global core.editor nano
   git config --global credential.helper "$netrc_helper_path"
-  git config --global user.name eggplants
+  git config --global gpg.program "$(which gpg)"
+  git config --global help.autocorrect 1
+  git config --global pull.rebase false
+  git config --global push.autoSetupRemote true
   git config --global user.email "$git_email"
+  git config --global user.name eggplants
   git config --global user.signingkey "$(
     gpg --list-secret-keys | tac | grep -m1 -B1 '^sec' | head -1 | awk '$0=$1'
   )"
-  git config --global gpg.program "$(which gpg)"
-  git config --global commit.gpgsign true
-  git config --global help.autocorrect 1
-  git config --global pull.rebase false
 }
 
 [[ -d ~/.nano ]] || {
@@ -254,7 +255,7 @@ setopt nolistbeep
 setopt aliasfuncdef
 setopt appendhistory
 setopt histignoredups
-# setopt sharehistory
+setopt sharehistory
 setopt extendedglob
 setopt incappendhistory
 setopt interactivecomments
