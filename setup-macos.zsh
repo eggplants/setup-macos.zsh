@@ -57,8 +57,8 @@ A
     gpg --list-keys | grep -Em1 '^uid' |
       rev | cut -f1 -d ' ' | tr -d '<>' | rev
   )"
-  gpg -e -r "$git_email" ~/.netrc
-  rm ~/.netrc
+  # gpg -e -r "$git_email" ~/.netrc
+  # rm ~/.netrc
   sudo chmod +x "$netrc_helper_path"
   git config --global commit.gpgsign true
   git config --global core.editor nano
