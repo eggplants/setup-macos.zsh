@@ -1,6 +1,12 @@
 # My macOS Setup
 
 ```zsh
+git clone https://github.com/eggplants/setup-macos.zsh
+cd setup-macos.zsh
+
+cp ./.brewfile ~/.Brewfile
+cp /path/to/.my.gpg.sec.key ~/.sec.key 
+
 ./setup-macos.zsh
 ```
 
