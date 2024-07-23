@@ -67,6 +67,7 @@ A
   git config --global help.autocorrect 1
   git config --global pull.rebase false
   git config --global push.autoSetupRemote true
+  git config --global rebase.autosquash true
   git config --global user.email "$git_email"
   git config --global user.name eggplants
   git config --global user.signingkey "$(
