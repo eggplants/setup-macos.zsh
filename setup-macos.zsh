@@ -309,8 +309,12 @@ export PATH="/usr/local/sbin:$PATH"
 export PATH="$PATH:$HOME/.local/bin"
 export PERLLIB="/Library/Developer/CommandLineTools/usr/share/git-core/perl:$PERLLIB"
 
+unset SSH_AGENT_PID
+if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+  export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+fi
 export GPG_TTY="$(tty)"
-export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+gpg-connect-agent updatestartuptty /bye >/dev/null
 A
 cat ~/.zshrc >>.zshrc.tmp
 mv .zshrc.tmp ~/.zshrc
