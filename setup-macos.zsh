@@ -26,14 +26,20 @@ brew bundle --global
 brew reinstall git nano
 
 # import key
-gpg --list-keys | grep -q 8117 || {
+gpg --list-keys | grep -q EE38 || {
   export GPG_TTY="$(tty)"
+  export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
   echo "pinentry-program $(which pinentry-mac)" >~/.gnupg/gpg-agent.conf
+  echo enable-ssh-support >> ~/.gnupg/gpg-agent.conf
+  touch ~/.gnupg/sshcontrol
   chmod 600 ~/.gnupg/*
   chmod 700 ~/.gnupg
   gpgconf --kill gpg-agent
   sleep 3s
   cat ~/.sec.key | gpg --allow-secret-key --import
+  gpg --list-key --with-keygrip | grep -FA1 '[SA]' | awk -F 'Keygrip = ' '$0=$2' >> ~/.gnupg/sshcontrol
+  gpg-connect-agent updatestartuptty /bye
+  # `gpg --export-ssh-key w10776e8w@yahoo.co.jp > ssh.pub` and copy to server's ~/.ssh/authorized_keys
 }
 
 [[ -f ~/.gitconfig ]] || {
@@ -304,6 +310,7 @@ export PATH="$PATH:$HOME/.local/bin"
 export PERLLIB="/Library/Developer/CommandLineTools/usr/share/git-core/perl:$PERLLIB"
 
 export GPG_TTY="$(tty)"
+export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 A
 cat ~/.zshrc >>.zshrc.tmp
 mv .zshrc.tmp ~/.zshrc
