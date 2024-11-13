@@ -43,32 +43,13 @@ gpg --list-keys | grep -q EE38 || {
 }
 
 [[ -f ~/.gitconfig ]] || {
-  echo -n "github token?> "
-  # Copy generated fine-grained PAT and paste.
-  # Required permission: Gist, Contents
-  # https://github.com/settings/tokens
-  read -s -r token
-  cat <<A >>~/.netrc
-machine github.com
-login eggplants
-password ${token}
-machine gist.github.com
-login eggplants
-password ${token}
-A
-  netrc_helper_path="$(
-    readlink /usr/local/bin/git -f | sed 's;/bin/git;;'
-  )/share/git-core/contrib/credential/netrc/git-credential-netrc.perl"
+  gh auth login
   git_email="$(
     gpg --list-keys | grep -Em1 '^uid' |
       rev | cut -f1 -d ' ' | tr -d '<>' | rev
   )"
-  # gpg -e -r "$git_email" ~/.netrc
-  # rm ~/.netrc
-  sudo chmod +x "$netrc_helper_path"
   git config --global commit.gpgsign true
   git config --global core.editor nano
-  git config --global credential.helper "$netrc_helper_path"
   git config --global gpg.program "$(which gpg)"
   git config --global help.autocorrect 1
   git config --global pull.rebase false
