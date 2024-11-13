@@ -43,7 +43,7 @@ gpg --list-keys | grep -q EE38 || {
 }
 
 [[ -f ~/.gitconfig ]] || {
-  gh auth login
+  gh auth login -p https -h gitHub.com -w <<<y
   git_email="$(
     gpg --list-keys | grep -Em1 '^uid' |
       rev | cut -f1 -d ' ' | tr -d '<>' | rev
