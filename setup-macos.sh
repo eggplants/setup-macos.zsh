@@ -54,7 +54,7 @@ if ! gpg --list-keys | grep -qE '^ *EE3A'; then
   # `gpg --export-ssh-key w10776e8w@yahoo.co.jp > ssh.pub` and copy to server's ~/.ssh/authorized_keys
 fi
 
-[[ -f ~/.gitconfig ]] || {
+if ! [[ -f ~/.gitconfig ]]; then
   gh auth login -p https -h gitHub.com -w <<<y
   git_email="$(
     gpg --list-keys | grep -Em1 '^uid' |
@@ -72,11 +72,11 @@ fi
   git config --global user.signingkey "$(
     gpg --list-secret-keys | tac | grep -m1 -B1 '^sec' | head -1 | awk '$0=$1'
   )"
-}
+fi
 
-[[ -d ~/.nano ]] || {
+if ! [[ -d ~/.nano ]]; then
   git clone --depth 1 --single-branch 'https://github.com/serialhex/nano-highlight' ~/.nano
-}
+fi
 cat <<'A' >~/.nanorc
 include "~/.nano/*.nanorc"
 
@@ -102,34 +102,34 @@ if ! grep -q 'mise activate' ~/.zshrc; then
 fi
 
 # python
-command -v python 2>/dev/null || {
+if ! mise which python -q; then
   mise use --global python@latest
   pip install pipx
   pipx ensurepath
   export PATH="$HOME/.local/bin:$PATH"
   pipx install getjump poetry yt-dlp
   poetry self add poetry-version-plugin
-}
+fi
 
 # ruby
-command -v ruby 2>/dev/null || {
+if ! mise which ruby -q; then
   mise use --global ruby@latest
-}
+fi
 
 # rust
-command -v rust 2>/dev/null || {
+if ! command -v rustc 2>/dev/null; then
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-}
+fi
 
 # node
-command -v node 2>/dev/null || {
+if ! mise which node; then
   mise use --global node@latest
-}
+fi
 
 # go
-command -v go 2>/dev/null || {
+if ! mise which go -q; then
   mise use --global go@latest
-}
+fi
 
 # lisp
 command -v sbcl 2>/dev/null || ros install sbcl-bin
