@@ -3,7 +3,6 @@ tap "gcenx/wine"
 tap "homebrew/bundle"
 brew "awscli"
 brew "binutils"
-brew "byobu"
 brew "cocoapods"
 brew "diffutils"
 brew "ffmpeg"
@@ -40,6 +39,7 @@ brew "whois"
 brew "winetricks"
 brew "xq"
 brew "yq"
+brew "zellij"
 brew "eggplants/tap/xmas"
 cask "1password"
 cask "alacritty"
@@ -63,6 +63,11 @@ cask "visual-studio-code"
 cask "vlc"
 cask "wine-crossover"
 cask "xquartz"
+mas "GarageBand", id: 682658836
+mas "iMovie", id: 408981434
+mas "Keynote", id: 409183694
+mas "Numbers", id: 409203825
+mas "Pages", id: 409201541
 mas "RunCat", id: 1429033973
 mas "Tailscale", id: 1475387142
 mas "Xcode", id: 497799835

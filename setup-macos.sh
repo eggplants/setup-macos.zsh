@@ -31,8 +31,8 @@ fi
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 if ! command -v brew &>/dev/null; then
   echo >> /Users/eggplants/.zprofile
-  echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/eggplants/.zprofile
-  eval "$(/opt/homebrew/bin/brew shellenv)"
+  echo 'eval "$('"$(brew --prefix)"'/bin/brew shellenv)"' >> /Users/eggplants/.zprofile
+  eval 'eval "$('"$(brew --prefix)"'/bin/brew shellenv)"'
 fi
 brew bundle --global
 brew reinstall git nano
@@ -102,7 +102,7 @@ if ! grep -q 'mise activate' ~/.zshrc; then
 fi
 
 # python
-if ! mise which python -q; then
+if ! mise which python -q &>/dev/null; then
   mise use --global python@latest
   pip install pipx
   pipx ensurepath
@@ -112,7 +112,7 @@ if ! mise which python -q; then
 fi
 
 # ruby
-if ! mise which ruby -q; then
+if ! mise which ruby -q &>/dev/null; then
   mise use --global ruby@latest
 fi
 
@@ -122,12 +122,12 @@ if ! command -v rustc 2>/dev/null; then
 fi
 
 # node
-if ! mise which node; then
+if ! mise which node -q &>/dev/null; then
   mise use --global node@latest
 fi
 
 # go
-if ! mise which go -q; then
+if ! mise which go -q &>/dev/null; then
   mise use --global go@latest
 fi
 
@@ -135,38 +135,39 @@ fi
 command -v sbcl 2>/dev/null || ros install sbcl-bin
 
 # alacritty-theme
-[[ -f ~/.config/alacritty/alacritty.toml ]] || {
+if ! [[ -f ~/.config/alacritty/alacritty.toml ]]; then
   mkdir -p ~/.config/alacritty
   curl -o- 'https://codeload.github.com/alacritty/alacritty-theme/tar.gz/refs/heads/master' |
     tar xzf - alacritty-theme-master/themes
   mv alacritty-theme-master ~/.config/alacritty
-  echo 'import = [' >>~/.config/alacritty/alacritty.toml
-  find ~/.config/alacritty/alacritty-theme-master/themes -type f -name '*toml' |
-    sed '/\/flexoki.toml/!s/^.*/  # "&",/' >>~/.config/alacritty/alacritty.toml
-  echo ']' >>~/.config/alacritty/alacritty.toml
 
   nf_font='HackGen Console NF'
-  cat <<A >>~/.config/alacritty/alacritty.toml
+  cat <<A >~/.config/alacritty/alacritty.toml
 [font]
 size = 10.0
 
 [font.bold]
-family = "$nf_font"
+family = "HackGen Console NF"
 style = "Bold"
 
 [font.bold_italic]
-family = "$nf_font"
+family = "HackGen Console NF"
 style = "Bold Italic"
 
 [font.italic]
-family = "$nf_font"
+family = "HackGen Console NF"
 style = "Italic"
 
 [font.normal]
-family = "$nf_font"
+family = "HackGen Console NF"
 style = "Regular"
+
+[general]
+import = [
+  "/Users/eggplants/.config/alacritty/alacritty-theme-master/themes/flexoki.toml",
+]
 A
-}
+fi
 
 # starship
 [[ -f ~/.config/starship.toml ]] || {
@@ -230,6 +231,7 @@ sheldon add --github zsh-users/zsh-completions zsh-completions
 
 cat <<'A' >>~/.zshrc
 eval "$(sheldon source)"
+eval "$(zellij setup --generate-auto-start zsh)"
 
 # if (which zprof > /dev/null) ;then
 #   zprof | less
@@ -304,7 +306,8 @@ export PATH="/usr/local/opt/gawk/libexec/gnubin:$PATH"
 export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
 export PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
-export PATH="/usr/local/sbin:$PATH"
+export PATH="$(brew --prefix)/bin:$PATH"
+export PATH="$(brew --prefix)/sbin:$PATH"
 export PATH="$PATH:$HOME/.local/bin"
 export PERLLIB="/Library/Developer/CommandLineTools/usr/share/git-core/perl:$PERLLIB"
 
@@ -318,13 +321,13 @@ A
 cat ~/.zshrc >>.zshrc.tmp
 mv .zshrc.tmp ~/.zshrc
 
-cat <<'A' >.zshenv.tmp
+cat <<'A' | sed 's;@brew_path@;'"$(brew --prefix)"'/bin/brew;' >.zshenv.tmp
 #!/usr/bin/env zsh
 
 function brew() {
-  /usr/bin/env -S brew "$@"
+  @brew_path@ "$@"
   if [[ "$1" =~ '^(install|remove|tap|uninstall)$' ]]; then
-    /usr/bin/env -S brew bundle dump --force --global
+    @brew_path@ bundle dump --force --global
   fi
 }
 
@@ -334,9 +337,6 @@ function shfmt() {
 A
 cat ~/.zshenv >>.zshenv.tmp
 mv .zshenv.tmp ~/.zshenv
-
-byobu-enable
-echo '_byobu_sourced=1 . /usr/bin/byobu-launch 2>/dev/null || true' >~/.zprofile
 
 rm ~/.sec.key
 popd
