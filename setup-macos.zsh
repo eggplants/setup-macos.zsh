@@ -22,6 +22,8 @@ pushd _setup
 # Setting > Privacy & Security > Security > Allow application from "Anywhere"
 sudo spctl --master-disable || :
 
+sudo xcodebuild -license || :
+
 if [[ "$(uname -m)" = 'arm64' ]]; then
   sudo softwareupdate --install-rosetta
 fi
