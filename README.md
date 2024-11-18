@@ -3,8 +3,8 @@
 ```zsh
 xcode-select --install
 
-git clone https://github.com/eggplants/setup-macos.zsh
-cd setup-macos.zsh
+git clone https://github.com/eggplants/setup-macos.sh
+cd setup-macos.sh
 
 cp ./.Brewfile ~/.Brewfile
 cp /path/to/.my.gpg.sec.key ~/.sec.key 
