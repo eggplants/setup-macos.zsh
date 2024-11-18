@@ -22,6 +22,10 @@ pushd _setup
 # Setting > Privacy & Security > Security > Allow application from "Anywhere"
 sudo spctl --master-disable || :
 
+if [[ "$(uname -m)" = 'arm64' ]]; then
+  sudo softwareupdate --install-rosetta
+fi
+
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 if ! command -v brew &>/dev/null; then
   echo >> /Users/eggplants/.zprofile
