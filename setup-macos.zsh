@@ -19,9 +19,15 @@ mkdir -p prog
 mkdir -p _setup
 pushd _setup
 
-sudo spctl --master-disable
+# Setting > Privacy & Security > Security > Allow application from "Anywhere"
+sudo spctl --master-disable || :
 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+if ! command -v brew &>/dev/null; then
+  echo >> /Users/eggplants/.zprofile
+  echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/eggplants/.zprofile
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
 brew bundle --global
 brew reinstall git nano
 
