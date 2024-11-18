@@ -1,6 +1,8 @@
 # My macOS Setup
 
 ```zsh
+xcode-select --install
+
 git clone https://github.com/eggplants/setup-macos.zsh
 cd setup-macos.zsh
 
