@@ -38,7 +38,7 @@ brew bundle --global
 brew reinstall git nano
 
 # import key
-gpg --list-keys | grep -q EE38 || {
+if ! gpg --list-keys | grep -qE '^ *EE3A'; then
   export GPG_TTY="$(tty)"
   export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
   echo "pinentry-program $(which pinentry-mac)" >~/.gnupg/gpg-agent.conf
@@ -52,7 +52,7 @@ gpg --list-keys | grep -q EE38 || {
   gpg --list-key --with-keygrip | grep -FA1 '[SA]' | awk -F 'Keygrip = ' '$0=$2' >> ~/.gnupg/sshcontrol
   gpg-connect-agent updatestartuptty /bye
   # `gpg --export-ssh-key w10776e8w@yahoo.co.jp > ssh.pub` and copy to server's ~/.ssh/authorized_keys
-}
+fi
 
 [[ -f ~/.gitconfig ]] || {
   gh auth login -p https -h gitHub.com -w <<<y
@@ -94,9 +94,12 @@ set statuscolor white,green
 A
 
 # mise
-echo 'eval "$(/usr/local/bin/mise activate bash)"' >>~/.bashrc
-echo 'eval "$(/usr/local/bin/mise activate zsh)"' >>~/.zshrc
-eval "$(/usr/local/bin/mise activate zsh)"
+if ! grep -q 'mise activate' ~/.zshrc; then
+  mise_path="$(which mise)"
+  echo 'eval "$('"$mise_path"' activate bash)"' >>~/.bashrc
+  echo 'eval "$('"$mise_path"' activate zsh)"' >>~/.zshrc
+  eval 'eval "$('"$mise_path"' activate zsh)"'
+fi
 
 # python
 command -v python 2>/dev/null || {
