@@ -72,6 +72,10 @@ if ! [[ -f ~/.gitconfig ]]; then
   git config --global user.signingkey "$(
     gpg --list-secret-keys | tac | grep -m1 -B1 '^sec' | head -1 | awk '$0=$1'
   )"
+  cb_prefix="url.git@codeberg.org:"
+  git config --global --remove-section "$gb_prefix" || :
+  git config --global "$cb_prefix".pushInsteadOf "git://codeberg.org/"
+  git config --global --add "$cb_prefix".pushInsteadOf "https://codeberg.org/"
 fi
 
 if ! [[ -d ~/.nano ]]; then
